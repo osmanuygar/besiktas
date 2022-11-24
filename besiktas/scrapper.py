@@ -13,17 +13,17 @@ class Scraper:
         )
 
         response = self.session.get(
-            url="https://www.transfermarkt.com.tr/galatasaray-istanbul/startseite/verein/141/saison_id/2022"
+            url="https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2022"
         )
         self.soup = BeautifulSoup(response.content, "html.parser")
 
     @property
     def matches(self):
-        return self.session.get("https://www.transfermarkt.com.tr/ceapi/nextMatches/team/141").json()
+        return self.session.get("https://www.transfermarkt.com.tr/ceapi/nextMatches/team/114").json()
 
     @property
     def rumors(self):
-        return self.session.get("https://www.transfermarkt.com.tr/ceapi/rumors/team/141").json()["rumors"]
+        return self.session.get("https://www.transfermarkt.com.tr/ceapi/rumors/team/114").json()["rumors"]
 
     @property
     def team_value(self):

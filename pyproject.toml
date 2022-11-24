@@ -1,13 +1,13 @@
 [tool.poetry]
-name = "galatasaray"
+name = "besiktas"
 version = "0.1.4"
-description = "Everything about the Galatasaray from cli!"
-authors = ["Ozcan Yarimdunya <ozcanyd@gmail.com>"]
+description = "besiktas cli!"
+authors = ["uygar <osmanuygar@gmail.com>"]
 license = "MIT"
-repository = "https://github.com/ozcanyarimdunya/galatasaray"
-homepage = "https://github.com/ozcanyarimdunya/galatasaray"
+repository = "https://github.com/osmanuygar/besiktas"
+homepage = "https://github.com/osmanuygar/besiktas"
 readme = "README.md"
-keywords = ["galatasaray"]
+keywords = ["besiktas"]
 classifiers = [
     "Environment :: Console",
     "Development Status :: 4 - Beta",
@@ -23,7 +23,7 @@ classifiers = [
 ]
 include = ["LICENCE", "screenshot.png"]
 packages = [
-    { include = "galatasaray" },
+    { include = "besiktas" },
 ]
 
 [tool.poetry.dependencies]
@@ -35,12 +35,12 @@ beautifulsoup4 = "^4.11.1"
 [tool.poetry.dev-dependencies]
 
 [tool.poetry.scripts]
-galatasaray = "galatasaray.cli:main"
+besiktas = "besiktas.cli:main"
 
 [tool.poetry.plugins]
 
-[tool.poetry.plugins."galatasaray.plugin"]
-"galatasaray" = "galatasaray.cli:main"
+[tool.poetry.plugins."besiktas.plugin"]
+"besiktas" = "besiktas.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

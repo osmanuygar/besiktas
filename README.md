@@ -1,17 +1,16 @@
-# Galatasaray
+# Besiktas
 
-Everything about the Galatasaray from cli!
+Besiktas CLI!
 
 ## Installation
 
 ```shell
-$ pip install galatasaray
+$ pip install besiktas
 ```
 
 ## Usage
 
 ```shell
-$ galatasaray
+$ besiktas
 ```
 
-![galatasaray](screenshot.png)

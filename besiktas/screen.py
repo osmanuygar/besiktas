@@ -59,8 +59,7 @@ class Application:
     @staticmethod
     def get_header_middle():
         logo = Group(
-            Align.center(":star::star::star::star:\n"),
-            Align.center("[red]GALATA[/red][yellow]SARAY[/yellow]\n"),
+            Align.center("[black]Besik[/black][white]tas[/white]\n"),
             Align.center("1905"),
         )
         return Panel(Align.center(logo, vertical="middle"), style="bold", padding=1)
@@ -157,5 +156,5 @@ class Application:
         table.add_column()
         table.add_column()
         table.add_row("quit", ": ", "CTRL + C")
-        table.add_row("credit", ": ", Text("@ozcanyarimdunya", style="link https://yarimdunya.com"))
+        table.add_row("credit", ": ", Text("@osmanuygar", style="link https://github.com/osmanuygar"))
         return Panel(table, box=box.SIMPLE)

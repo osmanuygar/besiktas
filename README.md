@@ -9,8 +9,12 @@ $ pip install besiktas
 ```
 
 ## Usage
-
-```shell
+Main Page
+```shell summary
 $ besiktas
+```
+List of Players
+```shell footballers
+$ besiktas kadro
 ```
 

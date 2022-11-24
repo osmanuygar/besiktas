@@ -76,7 +76,7 @@ class Application:
         standings.add_column(header="Puan")
 
         for no, club, matches, average, points, highlight in self.scrapper.standings:
-            style = "u yellow on red" if highlight else None
+            style = "u red on white" if highlight else None
             standings.add_row(no, club, matches, average, points, style=style)
         return Panel(standings, title="[cyan][b]TABLO KESİTİ SÜPER LİG[/b][/cyan]", box=box.SQUARE)
 
@@ -151,10 +151,55 @@ class Application:
 
     @staticmethod
     def get_footer():
-        table = Table.grid()
+        table = Table.grid(expand=True)
         table.add_column()
         table.add_column()
         table.add_column()
         table.add_row("quit", ": ", "CTRL + C")
         table.add_row("credit", ": ", Text("@osmanuygar", style="link https://github.com/osmanuygar"))
-        return Panel(table, box=box.SIMPLE)
+        return Panel(table, box=box.HORIZONTALS)
+
+
+class Footballers:
+    def __init__(self):
+        self.scrapper = Scraper()
+        self.layout = Layout(name="root")
+        self.layout.split(
+            Layout(name="main", ratio=20),
+            Layout(name="footer", ratio=1),
+        )
+
+    def setup(self):
+        # self.layout["header"].update(self.get_header())
+        self.layout["main"].update(self.get_main())
+        self.layout["footer"].update(self.get_footer())
+
+    def run(self):
+        with Live(self.layout, screen=True):
+            while True:
+                sleep(1)
+
+    @staticmethod
+    def get_header():
+        logo = Group(
+            Align.center("[black]BESIK[/black][white]TAS[/white]\n")
+        )
+        return Panel(logo, box=box.HORIZONTALS)
+
+    @staticmethod
+    def get_footer():
+        table = Table.grid(expand=True)
+        table.add_column()
+        table.add_column()
+        table.add_column()
+        table.add_row("quit", ": ", "CTRL + C")
+        table.add_row("credit", ": ", Text("@osmanuygar", style="link https://github.com/osmanuygar"))
+        return Panel(table, box=box.HORIZONTALS)
+
+    def get_main(self):
+        standings = Table(expand=True)
+        standings.add_column(header="Player")
+        standings.add_column(header="Position")
+        for i in range(0, len(self.scrapper.players["Player"]),1):
+            standings.add_row(self.scrapper.players["Player"][i], self.scrapper.players["Position"][i])
+        return Panel(standings, title="[cyan][b]Players[/b][/cyan]", box=box.SQUARE)

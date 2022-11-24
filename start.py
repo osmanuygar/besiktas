@@ -1,5 +1,6 @@
-from .screen import Application, Footballers
+from besiktas.screen import Application, Footballers
 import argparse
+
 
 def main():
     parser = argparse.ArgumentParser(description='Besiktas ClI')
@@ -24,3 +25,7 @@ def main():
             pass
         except Exception as ex:
             print(ex)
+
+
+
+main()

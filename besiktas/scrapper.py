@@ -15,7 +15,11 @@ class Scraper:
         response = self.session.get(
             url="https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2022"
         )
+        response_team = self.session.get(
+            url="https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2022"
+        )
         self.soup = BeautifulSoup(response.content, "html.parser")
+        self.teams = BeautifulSoup(response_team.content, "html.parser")
 
     @property
     def matches(self):
@@ -74,3 +78,22 @@ class Scraper:
             "members": table.find("span", attrs={"itemprop": "member"}).get_text(strip=True)
         }
         return truths
+
+    @property
+    def players(self):
+        table = self.teams.find('table', attrs={'class': 'items'})
+        # list of footballer names
+        player = []
+        players = table.find_all('img', attrs={'class': "bilderrahmen-fixed lazy lazy"})
+        for row in players:
+            player.append(str(str(row).split('" class', 1)[0].split('<img alt="', 1)[1]))
+        position = []
+        pos = [i.find_all('td')[-1] for i in table.find_all('table', attrs={'class': 'inline-table'})]
+        for i in range(0, len(pos), 1):
+            position.append(str(pos[i]).replace(" ", "").split('>', 1)[1].split('<', 1)[0].replace("\n", ""))
+
+        players = {
+            "Player": player,
+            "Position": position
+        }
+        return players

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "besiktas"
-version = "0.1.5"
+version = "0.1.2"
 description = "besiktas cli!"
 authors = ["uygar <osmanuygar@gmail.com>"]
 license = "MIT"

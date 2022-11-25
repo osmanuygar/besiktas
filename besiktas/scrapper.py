@@ -15,11 +15,8 @@ class Scraper:
         response = self.session.get(
             url="https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2022"
         )
-        response_team = self.session.get(
-            url="https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2022"
-        )
+
         self.soup = BeautifulSoup(response.content, "html.parser")
-        self.teams = BeautifulSoup(response_team.content, "html.parser")
 
     @property
     def matches(self):
@@ -81,8 +78,7 @@ class Scraper:
 
     @property
     def players(self):
-        table = self.teams.find('table', attrs={'class': 'items'})
-        # list of footballer names
+        table = self.soup.find('table', attrs={'class': 'items'})
         player = []
         players = table.find_all('img', attrs={'class': "bilderrahmen-fixed lazy lazy"})
         for row in players:
@@ -91,9 +87,65 @@ class Scraper:
         pos = [i.find_all('td')[-1] for i in table.find_all('table', attrs={'class': 'inline-table'})]
         for i in range(0, len(pos), 1):
             position.append(str(pos[i]).replace(" ", "").split('>', 1)[1].split('<', 1)[0].replace("\n", ""))
+        market_value = []
+        money = table.find_all('td', attrs={'class': ["rechts"]})
+        for i in range(0, len(money), 1):
+            market_value.append(str(money[i]).split('>', 2)[2].split('<', 1)[0])
+        age = []
+        ages = table.find_all('td', attrs={'class': 'zentriert'})
+
+        for i in range(1, len(ages), 3):
+            age.append(str(ages[i]).split(">", 1)[1].split("<", 1)[0])
 
         players = {
             "Player": player,
-            "Position": position
+            "Age": age,
+            "Position": position,
+            "Market Value": market_value
         }
         return players
+
+    @property
+    def goals(self):
+        table = self.soup.find('div', attrs={'data-viewport': 'TopTorschuetzen'})
+        players = table.select('span', attrs={'class': "spielername"})
+        goals = table.select('td', attrs={'class': "zentriert tore"})
+        player = []
+        position = []
+        goal = []
+        for i in range(0,len(players),2):
+            player.append(players[i].get_text(strip=True))
+            position.append(players[i+1].get_text(strip=True))
+        for each in range(2,len(goals), 3):
+            goal.append(goals[each].get_text(strip=True))
+
+        goaller = {
+            "Player": player,
+            "Position": position,
+            "Goals": goal
+        }
+
+        return goaller
+
+    @property
+    def assists(self):
+        table = self.soup.find('div', attrs={'data-viewport': 'TopVorlagengeber'})
+        players = table.select('span', attrs={'class': "spielername"})
+        goals = table.select('td', attrs={'class': "zentriert tore"})
+        player = []
+        position = []
+        goal = []
+        for i in range(0, len(players), 2):
+            player.append(players[i].get_text(strip=True))
+            position.append(players[i + 1].get_text(strip=True))
+        for each in range(2, len(goals), 3):
+            goal.append(goals[each].get_text(strip=True))
+
+        assistant = {
+            "Player": player,
+            "Position": position,
+            "Assists": goal
+        }
+
+        return assistant
+

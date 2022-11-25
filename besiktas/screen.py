@@ -165,12 +165,11 @@ class Footballers:
         self.scrapper = Scraper()
         self.layout = Layout(name="root")
         self.layout.split(
-            Layout(name="main", ratio=20),
-            Layout(name="footer", ratio=1),
+            Layout(name="main", ratio=24),
+            Layout(name="footer", ratio=2),
         )
 
     def setup(self):
-        # self.layout["header"].update(self.get_header())
         self.layout["main"].update(self.get_main())
         self.layout["footer"].update(self.get_footer())
 
@@ -178,13 +177,6 @@ class Footballers:
         with Live(self.layout, screen=True):
             while True:
                 sleep(1)
-
-    @staticmethod
-    def get_header():
-        logo = Group(
-            Align.center("[black]BESIK[/black][white]TAS[/white]\n")
-        )
-        return Panel(logo, box=box.HORIZONTALS)
 
     @staticmethod
     def get_footer():
@@ -199,7 +191,66 @@ class Footballers:
     def get_main(self):
         standings = Table(expand=True)
         standings.add_column(header="Player")
+        standings.add_column(header="Age")
         standings.add_column(header="Position")
+        standings.add_column(header="Market Value")
+
         for i in range(0, len(self.scrapper.players["Player"]),1):
-            standings.add_row(self.scrapper.players["Player"][i], self.scrapper.players["Position"][i])
-        return Panel(standings, title="[cyan][b]Players[/b][/cyan]", box=box.SQUARE)
+            standings.add_row(self.scrapper.players["Player"][i], self.scrapper.players["Age"][i]
+                              , self.scrapper.players["Position"][i],self.scrapper.players["Market Value"][i])
+        return Panel(standings, title="[cyan][b]Besiktas Squad[/b][/cyan]", box=box.SQUARE)
+
+
+class Stats:
+    def __init__(self):
+        self.scrapper = Scraper()
+        self.layout = Layout(name="root")
+        self.layout.split(
+            Layout(name="main", ratio=10),
+            Layout(name="footer", ratio=2),
+        )
+        self.layout["main"].split_row(
+            Layout(name="main-left", ratio=1),
+            Layout(name="main-right", ratio=1)
+        )
+
+    def setup(self):
+        self.layout["main-left"].update(self.get_main_left_stats())
+        self.layout["main-right"].update(self.get_main_right_stats())
+        self.layout["footer"].update(self.get_footer())
+
+    def run(self):
+        with Live(self.layout, screen=True):
+            while True:
+                sleep(1)
+
+    def get_main_left_stats(self):
+        standings = Table(expand=True)
+        standings.add_column(header="Player")
+        standings.add_column(header="Position")
+        standings.add_column(header="Goals")
+
+        for i in range(0, len(self.scrapper.goals["Player"]), 1):
+            standings.add_row(self.scrapper.goals["Player"][i],  self.scrapper.goals["Position"][i], self.scrapper.goals["Goals"][i])
+        return Panel(standings, title="[cyan][b]TOP GOALSCORERS[/b][/cyan]", box=box.SQUARE)
+
+    def get_main_right_stats(self):
+        standings = Table(expand=True)
+        standings.add_column(header="Player")
+        standings.add_column(header="Position")
+        standings.add_column(header="Assists")
+
+        for i in range(0, len(self.scrapper.assists["Player"]), 1):
+            standings.add_row(self.scrapper.assists["Player"][i], self.scrapper.assists["Position"][i],
+                              self.scrapper.assists["Assists"][i])
+        return Panel(standings, title="[cyan][b]MOST ASSISTS[/b][/cyan]", box=box.SQUARE)
+
+
+    def get_footer(self):
+        table = Table.grid(expand=True)
+        table.add_column()
+        table.add_column()
+        table.add_column()
+        table.add_row("quit", ": ", "CTRL + C")
+        table.add_row("credit", ": ", Text("@osmanuygar", style="link https://github.com/osmanuygar"))
+        return Panel(table, box=box.HORIZONTALS)

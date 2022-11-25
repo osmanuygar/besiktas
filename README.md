@@ -15,6 +15,10 @@ $ besiktas
 ```
 List of Players
 ```shell footballers
-$ besiktas kadro
+$ besiktas -kadro
+```
+List of Top Scorers
+```shell footballers
+$ besiktas -stats
 ```
 

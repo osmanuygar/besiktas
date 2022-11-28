@@ -1,17 +1,28 @@
-# Welcome to MkDocs
+# Besiktas
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Besiktas CLI!
 
-## Commands
+## Installation
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+```shell
+$ pip install besiktas
+```
 
-## Project layout
+## Usage
+Main Page
+```
+$ besiktas
+```
+![](main.png)
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+List of Players
+```
+$ besiktas -kadro
+```
+![](kadro.png)
+
+List of Top Scorers
+```
+$ besiktas -stats
+```
+![](stats.png)

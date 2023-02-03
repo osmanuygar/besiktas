@@ -1,6 +1,6 @@
 # Besiktas
 
-Besiktas CLI!
+Besiktas CLI! Aq biraz kosun!
 
 ## Installation
 

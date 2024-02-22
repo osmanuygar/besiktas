@@ -2,11 +2,17 @@
 
 Besiktas CLI! Aq biraz kosun!
 
-## Installation
+## Installation on local
 
 ```shell
 $ pip install besiktas
 ```
+## Installation with Docker
+
+```shell
+$ docker run -ti osmanuygar/besiktas
+```
+
 
 ## Usage
 Main Page

@@ -13,7 +13,7 @@ class Scraper:
         )
 
         response = self.session.get(
-            url="https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2023"
+            url="https://www.transfermarkt.com.tr/besiktas-istanbul/startseite/verein/114/saison_id/2024"
         )
 
         self.soup = BeautifulSoup(response.content, "html.parser")

@@ -225,6 +225,10 @@ class Stats:
                 sleep(1)
 
     def get_main_left_stats(self):
+        if self.scrapper.goals is None:
+            print("Error: scrapper.goals is None")
+            return Panel(Text("No data available"), title="[cyan][b]TOP GOALSCORERS[/b][/cyan]", box=box.SQUARE)
+
         standings = Table(expand=True)
         standings.add_column(header="Player")
         standings.add_column(header="Position")
@@ -235,6 +239,10 @@ class Stats:
         return Panel(standings, title="[cyan][b]TOP GOALSCORERS[/b][/cyan]", box=box.SQUARE)
 
     def get_main_right_stats(self):
+        if self.scrapper.assists is None:
+            print("Error: scrapper.assists is None")
+            return Panel(Text("No data available"), title="[cyan][b]MOST ASSISTS[/b][/cyan]", box=box.SQUARE)
+
         standings = Table(expand=True)
         standings.add_column(header="Player")
         standings.add_column(header="Position")
@@ -244,7 +252,6 @@ class Stats:
             standings.add_row(self.scrapper.assists["Player"][i], self.scrapper.assists["Position"][i],
                               self.scrapper.assists["Assists"][i])
         return Panel(standings, title="[cyan][b]MOST ASSISTS[/b][/cyan]", box=box.SQUARE)
-
 
     def get_footer(self):
         table = Table.grid(expand=True)
